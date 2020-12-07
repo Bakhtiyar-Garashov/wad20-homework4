@@ -2,6 +2,7 @@ import {mount, createLocalVue} from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import Posts from "../../src/components/Posts.vue";
+import moment from 'moment';
 
 const localVue = createLocalVue();
 
@@ -100,7 +101,50 @@ describe('Posts', () => {
 
     const wrapper = mount(Posts, {router, store, localVue});
 
-    it('1 == 1', function () {
-        expect(true).toBe(true)
+    it('renders the correct amount of posts', function () {
+
+        const items = wrapper.findAll('.post');
+
+        expect(items.length).toBe(testData.length);
+    });
+
+    it('post media property', function () {
+
+        const items = wrapper.findAll('.post');
+
+        for (const item in items) {
+
+            function isSame(element) {
+                return element.id === item.id;
+            }
+
+            const testItem = testData.find(isSame);
+
+            if (item.media != null) {
+                expect(item.media.type).toBe(testItem.media.type);
+            } else {
+                expect(item.media).toBe(undefined);
+            }
+        }
+    });
+
+    it('create time in correct format', function () {
+
+        const items = wrapper.findAll('.post');
+
+        for (const item in items) {
+
+            function isSame(element) {
+                return element.id === item.id;
+            }
+
+            const testItem = testData.find(isSame);
+
+            function formatDate(value) {
+                return moment(value).format('LLLL');
+            }
+
+            expect(item.createTime).toBe(formatDate(testItem.createTime));
+        }
     });
 });
