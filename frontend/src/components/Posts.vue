@@ -133,7 +133,7 @@
         margin: 10px 0;
     }
 
-    .post .post-image img, video {
+    .post .post-media img, video {
         width: 100%;
         min-height: 150px;
         max-height: 350px;
