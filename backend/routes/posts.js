@@ -22,14 +22,16 @@ router.get('/', authorize, (request, response) => {
 
 });
 
-router.post('/', authorize,  (request, response) => {
+router.post('/', authorize, (request, response) => {
 
     // Endpoint to create a new post
+    // TASK #1
+    //console.log(request.currentUser)
 
-    PostModel.create(request.currentUser.id, (posts) => {
-
+    try {
+        
         let post = {
-            id: Number.parseInt(posts[posts.length - 1].id) + 1,
+            userId: request.currentUser.id,
             text: request.body.text,
             media: request.body.media,
             author: request.currentUser.author,
@@ -37,10 +39,16 @@ router.post('/', authorize,  (request, response) => {
             likes: 0,
         };
 
-        posts.push(post);
+        PostModel.create(post,(post)=>{
+            console.log(post)
+        });
 
-        response.json(posts);
-    })
+        response.status(201).json({"success":"New post object created"});
+
+
+    } catch (error) {
+        console.log(error)
+    }
 
 });
 

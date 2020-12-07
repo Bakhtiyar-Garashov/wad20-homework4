@@ -11,6 +11,8 @@ const PostModel = {
             params.media.url
         ];
 
+        console.log(data)
+
         return query(statement, data, callback);
     },
 
