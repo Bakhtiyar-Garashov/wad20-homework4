@@ -49,7 +49,7 @@ router.put('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to like a post
 
-    PostModel.like(request.currentUser.id, request.postId, (posts) => {
+    PostModel.like(request.currentUser.id, request.params.postId, (posts) => {
 
     })
 
@@ -59,7 +59,7 @@ router.delete('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to unlike a post
 
-    PostModel.unlike(request.currentUser.id, request.postId.id, (posts) => {
+    PostModel.unlike(request.currentUser.id, request.params.postId, (posts) => {
 
     })
 

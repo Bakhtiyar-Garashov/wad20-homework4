@@ -13,11 +13,11 @@
                         <img :src="post.author.avatar" :alt="post.author | profileName"/>
                         <small>{{post.author | profileName}}</small>
                     </span>
-                    <small>{{post.createTime | formatDate}}</small>
+                    <small class="post-date">{{post.createTime | formatDate}}</small>
                 </span>
-                <div class="post-image" v-if="post.media">
-                    <img :src="post.media.url" :alt="post.text" v-if="post.media.type === 'image'">
-                    <video controls="" v-if="post.media.type === 'video'">
+                <div class="post-media" v-if="post.media">
+                    <img class="post-image" :src="post.media.url" :alt="post.text" v-if="post.media.type === 'image'">
+                    <video class="post-video" controls="" v-if="post.media.type === 'video'">
                         <source type="video/mp4" :src="post.media.url">
                     </video>
                 </div>
