@@ -108,43 +108,32 @@ describe('Posts', () => {
         expect(items.length).toBe(testData.length);
     });
 
+
+
     it('post media property', function () {
 
-        const items = wrapper.findAll('.post');
+        const media = wrapper.findAll(".post-media");
+        const images = wrapper.findAll(".post-image");
+        const videos = wrapper.findAll(".post-video");
 
-        for (const item in items) {
+        expect(media.length).toBe(testData.filter(item => item.media != null).length);
+        expect(images.length).toBe(testData.filter(item => item.media != null && item.media.type === "image").length);
+        expect(videos.length).toBe(testData.filter(item => item.media != null && item.media.type === "video").length);
 
-            function isSame(element) {
-                return element.id === item.id;
-            }
-
-            const testItem = testData.find(isSame);
-
-            if (item.media != null) {
-                expect(item.media.type).toBe(testItem.media.type);
-            } else {
-                expect(item.media).toBe(undefined);
-            }
-        }
     });
 
     it('create time in correct format', function () {
 
-        const items = wrapper.findAll('.post');
+        const dates = wrapper.findAll('.post-date');
 
-        for (const item in items) {
+        function formatDate(value) {
+            return moment(value).format('LLLL');
+        }
 
-            function isSame(element) {
-                return element.id === item.id;
-            }
+        for (let i = 0; i < dates.length; i++) {
+            const dateItem = dates.at(i).text();
 
-            const testItem = testData.find(isSame);
-
-            function formatDate(value) {
-                return moment(value).format('LLLL');
-            }
-
-            expect(item.createTime).toBe(formatDate(testItem.createTime));
+            expect(dateItem).toBe(formatDate(dateItem));
         }
     });
 });
