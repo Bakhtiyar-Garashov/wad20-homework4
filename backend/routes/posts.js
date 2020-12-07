@@ -29,7 +29,6 @@ router.post('/', authorize, (request, response) => {
     //console.log(request.currentUser)
 
     try {
-        
         let post = {
             userId: request.currentUser.id,
             text: request.body.text,
