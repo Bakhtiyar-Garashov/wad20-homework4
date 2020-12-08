@@ -99,6 +99,8 @@ jest.mock("axios", () => ({
 
 describe('Posts', () => {
 
+    // TASK #4
+
     const wrapper = mount(Posts, {router, store, localVue});
 
     it('renders the correct amount of posts', function () {
@@ -110,7 +112,7 @@ describe('Posts', () => {
 
 
 
-    it('post media property', function () {
+    it('has correct media properties', function () {
 
         const media = wrapper.findAll(".post-media");
         const images = wrapper.findAll(".post-image");
@@ -122,7 +124,7 @@ describe('Posts', () => {
 
     });
 
-    it('create time in correct format', function () {
+    it('creates time in correct format', function () {
 
         const dates = wrapper.findAll('.post-date');
 
@@ -133,7 +135,7 @@ describe('Posts', () => {
         for (let i = 0; i < dates.length; i++) {
             const dateItem = dates.at(i).text();
 
-            expect(dateItem).toBe(formatDate(dateItem));
+            expect(dateItem).toBe(formatDate(testData[0].createTime));
         }
     });
 });
