@@ -135,6 +135,8 @@ describe('Posts', () => {
         for (let i = 0; i < dates.length; i++) {
             const dateItem = dates.at(i).text();
 
+            //As all posts have the same date and time.
+
             expect(dateItem).toBe(formatDate(testData[0].createTime));
         }
     });
