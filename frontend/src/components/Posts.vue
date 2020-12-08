@@ -136,7 +136,7 @@
     .post .post-media img, video {
         width: 100%;
         min-height: 150px;
-        max-height: 350px;
+        max-height: 15%;
         object-fit: cover;
         object-position: top center;
     }

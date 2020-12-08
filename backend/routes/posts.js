@@ -6,9 +6,11 @@ const PostModel = require('../models/PostModel');
 
 router.get('/', authorize, (request, response) => {
 
+
     // Endpoint to get posts of people that currently logged in user follows or their own posts
 
     PostModel.getAllForUser(request.currentUser.id, (postIds) => {
+        console.log(postIds)
 
         if (postIds.length) {
             PostModel.getByIds(postIds, request.currentUser.id, (posts) => {
@@ -38,15 +40,15 @@ router.post('/', authorize, (request, response) => {
             likes: 0,
         };
 
-        PostModel.create(post,(post)=>{
+        PostModel.create(post, (post) => {
             console.log(post)
         });
 
-        response.status(201).json({"success":"New post object created"});
+        response.status(201).json({ "success": "New post object created" });
 
 
     } catch (error) {
-        console.log(error)
+        response.status(500).json({ "failed": "Something went wrong when adding data" })
     }
 
 });
@@ -56,9 +58,17 @@ router.put('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to like a post
 
-    PostModel.like(request.currentUser.id, request.params.postId, (posts) => {
+    try {
 
-    })
+        PostModel.like(request.currentUser.id, request.params.postId, (posts) => {
+
+            console.log(posts)
+
+        })
+        response.status(200).json({ "success": "Post liked" })
+    } catch (error) {
+        response.status(500).json({ "failed": "Post like request failed" })
+    }
 
 });
 
@@ -66,9 +76,15 @@ router.delete('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to unlike a post
 
-    PostModel.unlike(request.currentUser.id, request.params.postId, (posts) => {
+    try {
+        PostModel.unlike(request.currentUser.id, request.params.postId, (posts) => {
+            console.log(posts)
+        })
 
-    })
+        response.status(200).json({ "success": "Post disliked" })
+    } catch (error) {
+        response.status(500).json({ "failed": "Post dislike request failed" })
+    }
 
 });
 

@@ -105,6 +105,7 @@
         border-radius: 100%;
         object-fit: cover;
         object-position: top center;
+        cursor: pointer;
     }
 
     nav div.search-container > input {
