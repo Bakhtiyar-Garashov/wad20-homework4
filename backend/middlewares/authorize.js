@@ -1,4 +1,5 @@
 const UserModel = require('../models/UserModel');
+const jwt = require('../library/jwt');
 
 module.exports = (request, response, next) => {
 
@@ -10,7 +11,14 @@ module.exports = (request, response, next) => {
     */
 
     if (request.headers.authorization) {
-        UserModel.getById(1, (user) => {
+        let accessToken = request.headers.authorization.slice(7);
+        if (!jwt.verifyAccessToken(accessToken)){
+            return response.status(403).json({
+                message: 'Invalid token'
+            });
+        }
+        let email = jwt.decodeAccessToken(accessToken)['email'];
+        UserModel.getByEmail(email, (user) => {
             request.currentUser = user;
             next();
         });
